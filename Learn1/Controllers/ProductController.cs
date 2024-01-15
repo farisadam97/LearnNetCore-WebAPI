@@ -26,6 +26,22 @@ namespace Learn1.Controllers
             return Ok(productDtos);
         }
 
+        [HttpGet("{productId}")]
+        public async Task<ActionResult<ProductDto>> GetProductById(int productId)
+        {
+            if(productId <= 0) {
+                return BadRequest();
+            }
+
+            ProductDto productDtos = await _productService.GetByIdAsync(productId);
+
+            if(productDtos == null)
+            {
+                return NotFound();
+            }
+            return Ok(productDtos);
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddProduct([FromBody] ProductPostDto productPostDto)
         {

@@ -46,7 +46,7 @@ namespace Learn1.Application.Services
 
         public async Task<ProductDto> GetByIdAsync(int id)
         {
-            Product product = await _productRepository.GetByIdAsync(id);
+            Product product = await _productRepository.GetByIdAsync(id) ?? throw new Exception("Product Not Found");
 
             // convert from entity to dto
             ProductDto productDto = _mapper.Map<Product,ProductDto>(product);

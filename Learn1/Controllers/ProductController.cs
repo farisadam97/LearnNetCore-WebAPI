@@ -25,5 +25,38 @@ namespace Learn1.Controllers
             List<ProductDto> productDtos = await _productService.GetAllAsync();
             return Ok(productDtos);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AddProduct([FromBody] ProductPostDto productPostDto)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _productService.AddAsync(productPostDto);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteProductById(int productId)
+        {
+            if(productId <= 0) {
+                return BadRequest();
+            }
+            await _productService.DeleteAsync(productId);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateProductById([FromBody] ProductDto productDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            await _productService.UpdateAsync(productDto);
+            return Ok();
+        }
     }
 }
